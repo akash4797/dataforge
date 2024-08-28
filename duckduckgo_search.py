@@ -9,7 +9,7 @@ def search_duckduckgo(query):
     response = requests.get(url, headers=headers)
     
     # Debugging: Log the HTML content
-    print("HTML response on VPS:", response.text[:1000])  # Print the first 500 characters
+    print("HTML response on VPS:", response.text[:500])  # Print the first 500 characters
 
     soup = BeautifulSoup(response.text, "html.parser")
 
