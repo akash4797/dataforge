@@ -1,3 +1,4 @@
+import time
 import requests
 from bs4 import BeautifulSoup
 
@@ -10,6 +11,8 @@ def search_duckduckgo(query):
     # Start a session to persist headers and cookies
     session = requests.Session()
     response = session.get(url, headers=headers)
+
+    print(response.text)
     
 
     # Process the HTML response if it's as expected
