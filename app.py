@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
 from keyword_extraction import extract_keywords
 from pdf_extraction import extract_text_from_pdf
-from duckduckgo_search import search_duckduckgo
+from search_internet import search_duckduckgo
+from search_internet import search_google
 
 app = Flask(__name__)
 
@@ -58,7 +59,7 @@ def extract_text_from_pdf_route():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/search_duckduckgo', methods=['GET'])
+@app.route('/searchweb', methods=['GET'])
 def search_duckduckgo_route():
     try:
         data = request.get_json()
@@ -74,7 +75,7 @@ def search_duckduckgo_route():
             raise ValueError("'query' should be a string")
 
         # Perform DuckDuckGo search using the function from duckduckgo_search.py
-        results = search_duckduckgo(query)
+        results = search_google(query)
 
         return jsonify({'results': results}), 200
     except Exception as e:
