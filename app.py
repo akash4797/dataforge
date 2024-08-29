@@ -6,6 +6,15 @@ from search_internet import search_google
 
 app = Flask(__name__)
 
+@app.route('/momo-callback', methods=['POST'])
+def momo_callback():
+    try:
+        data = request.get_json()
+        print("Callback received:", data)
+        return jsonify({'message': 'Callback received'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/extract_keywords', methods=['POST'])
 def extract_keywords_route():
     try:
