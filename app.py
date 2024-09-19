@@ -3,6 +3,7 @@ from keyword_extraction import extract_keywords
 from pdf_extraction import extract_text_from_pdf
 from search_internet import search_duckduckgo
 from search_internet import search_google
+from email_extraction import search_emails_for_multiple_companies
 
 app = Flask(__name__)
 
@@ -88,7 +89,32 @@ def search_duckduckgo_route():
 
         return jsonify({'results': results}), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 500        
+        return jsonify({'error': str(e)}), 500       
+
+# New route for email extraction
+@app.route('/search_emails', methods=['POST'])
+def search_emails_route():
+    try:
+        data = request.get_json()
+        
+        # Check if 'company_names' exists in the input data
+        if data is None or 'company_names' not in data:
+            raise ValueError("'company_names' key not found in the JSON data")
+        
+        company_names = data['company_names']
+        
+        # Ensure 'company_names' is a list of strings
+        if not isinstance(company_names, list) or not all(isinstance(name, str) for name in company_names):
+            raise ValueError("'company_names' must be a list of strings")
+
+        # Call the function to search emails for multiple companies
+        results = search_emails_for_multiple_companies(company_names)
+        
+        return jsonify(results), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3200)
