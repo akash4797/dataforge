@@ -61,6 +61,7 @@ def search_emails_for_multiple_companies(company_names):
     for company_name in company_names:
         print(f"Searching emails for: {company_name}")
         emails = search_email_google(company_name)
+        print(f"Emails found for {company_name}: {emails}")
         results[company_name] = emails
     
     return results
